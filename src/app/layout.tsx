@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+// 添加到根布局的任何 UI 都将在应用程序的所有页面之间共享
 import '@/app/ui/global.css';
 import { inter } from '@/app/ui/fonts';
 
