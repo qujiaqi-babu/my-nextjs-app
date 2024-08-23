@@ -12,15 +12,13 @@ import { formatCurrency } from './utils';
 // 获取 revenue 数据：12个月的收入
 export async function fetchRevenue() {
   try {
-    // Artificially delay a response for demo purposes.
-    // Don't do this in production :)
-
-    // console.log('Fetching revenue data...');
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
+    // 人为添加了 1 秒延迟来模拟缓慢的数据提取
+    console.log('Fetching Revenue data...');
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     const data = await sql<Revenue>`SELECT * FROM revenue`;
 
-    // console.log('Data fetch completed after 1 seconds.');
+    console.log('Revenue Data fetch completed after 1 seconds.');
 
     return data.rows;
   } catch (error) {
@@ -32,6 +30,10 @@ export async function fetchRevenue() {
 // 获取 LatestInvoices：按日期排序的最新 5 张发票
 export async function fetchLatestInvoices() {
   try {
+    // 人为添加了 2 秒延迟来模拟缓慢的数据提取
+    console.log('Fetching LatestInvoices data...');
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    
     const data = await sql<LatestInvoiceRaw>`
       SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
       FROM invoices
@@ -43,6 +45,9 @@ export async function fetchLatestInvoices() {
       ...invoice,
       amount: formatCurrency(invoice.amount),
     }));
+
+    console.log('LatestInvoices Data fetch completed after 2 seconds.');
+
     return latestInvoices;
   } catch (error) {
     console.error('Database Error:', error);
@@ -64,6 +69,10 @@ export async function fetchCardData() {
          SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
          FROM invoices`;
 
+    // 人为添加了 3 秒延迟来模拟缓慢的数据提取
+    console.log('Fetching Card data...');
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+
     const data = await Promise.all([
       invoiceCountPromise,
       customerCountPromise,
@@ -74,6 +83,8 @@ export async function fetchCardData() {
     const numberOfCustomers = Number(data[1].rows[0].count ?? '0');
     const totalPaidInvoices = formatCurrency(data[2].rows[0].paid ?? '0');
     const totalPendingInvoices = formatCurrency(data[2].rows[0].pending ?? '0');
+
+    console.log('Card Data fetch completed after 3 seconds.');
 
     return {
       numberOfCustomers,

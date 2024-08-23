@@ -19,3 +19,11 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
   - 登录页面。
   - 受身份验证保护的仪表板页面。
   - 用户可以添加、编辑和删除发票。
+
+/dashboard
+
+![1724412042361](image/README/1724412042361.png)
+
+/dashboard（loading）
+
+![1724415126103](image/README/1724415126103.png)
