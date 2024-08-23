@@ -1,5 +1,6 @@
 import { Revenue } from './definitions';
 
+// 将金额格式化为类似 $1,234.56 的字符串
 export const formatCurrency = (amount: number) => {
   return (amount / 100).toLocaleString('en-US', {
     style: 'currency',

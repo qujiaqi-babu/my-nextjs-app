@@ -9,17 +9,18 @@ import {
 } from './definitions';
 import { formatCurrency } from './utils';
 
+// 获取 revenue 数据：12个月的收入
 export async function fetchRevenue() {
   try {
     // Artificially delay a response for demo purposes.
     // Don't do this in production :)
 
     // console.log('Fetching revenue data...');
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
 
     const data = await sql<Revenue>`SELECT * FROM revenue`;
 
-    // console.log('Data fetch completed after 3 seconds.');
+    // console.log('Data fetch completed after 1 seconds.');
 
     return data.rows;
   } catch (error) {
@@ -28,6 +29,7 @@ export async function fetchRevenue() {
   }
 }
 
+// 获取 LatestInvoices：按日期排序的最新 5 张发票
 export async function fetchLatestInvoices() {
   try {
     const data = await sql<LatestInvoiceRaw>`
@@ -48,11 +50,13 @@ export async function fetchLatestInvoices() {
   }
 }
 
+// 获取 Card 数据：发票总数、顾客总数、收取的发票总金额、待处理发票的总金额
 export async function fetchCardData() {
   try {
     // You can probably combine these into a single SQL query
     // However, we are intentionally splitting them to demonstrate
     // how to initialize multiple queries in parallel with JS.
+    // 可以使用 Array.length 来获取发票和客户的总数，但使用 SQL 可以只获取所需的数据，这意味着在请求期间需要传输的数据更少
     const invoiceCountPromise = sql`SELECT COUNT(*) FROM invoices`;
     const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
     const invoiceStatusPromise = sql`SELECT
