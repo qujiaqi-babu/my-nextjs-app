@@ -98,6 +98,7 @@ export async function fetchCardData() {
   }
 }
 
+// 获取 满足搜索查询 的 ITEMS_PER_PAGE 张发票信息，时间由近及远
 const ITEMS_PER_PAGE = 6;
 export async function fetchFilteredInvoices(
   query: string,
@@ -134,6 +135,7 @@ export async function fetchFilteredInvoices(
   }
 }
 
+// 获取 满足搜索查询 的 发票列表总页数：发票查询结果总数 / ITEMS_PER_PAGE
 export async function fetchInvoicesPages(query: string) {
   try {
     const count = await sql`SELECT COUNT(*)
